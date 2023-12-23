@@ -17,7 +17,7 @@ REPLIC_NO_AUTH = 'Извините, вы не авторизованы для и
 
 
 async def command_admin(message: types.Message):
-    '''Admin command'''
+    '''Вызывет список команд доступных администратору'''
     try:
         admin_id = ADMIN_IDS  # Замените на админский айди
         if int(message.from_user.id) == int(admin_id):

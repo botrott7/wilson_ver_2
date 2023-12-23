@@ -15,7 +15,7 @@ REPLIC_EXCEPT_CLIENT = 'Пожалуйста, повторите попытку 
 
 
 async def command_start(message: types.Message):
-    '''Start command'''
+    '''Функция, которая запускает бота'''
     try:
         await bot.send_message(message.from_user.id, 'Hello this is commadn start!')
         await message.delete()
@@ -25,7 +25,7 @@ async def command_start(message: types.Message):
 
 
 async def command_help(message: types.Message):
-    '''Help command'''
+    '''Команда, которая вызывает список доступных команд'''
     try:
         await message.answer('THIS IS TEST COMMAND HELP')
         await message.delete()
@@ -44,7 +44,7 @@ async def command_finance(message: types.Message):
 
 
 async def command_bot(message: types.Message, state: FSMContext):
-    '''Bot command'''
+    '''Команда, которая просит пользователя ввести вопрос'''
     try:
         await message.answer('Пожалуйста, введите ваш вопрос: ')
         await Form_bot.bot_command.set()
