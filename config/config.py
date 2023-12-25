@@ -15,6 +15,7 @@ CATEGORY_VALUES = {
 
 BOT_TOKEN = os.getenv('BOT')
 ADMIN_IDS = os.getenv('ADMIN')
+API_YAN_LANDS = os.getenv('API_YAN_LANDS')
 storage = MemoryStorage()
 
 bot = Bot(BOT_TOKEN)

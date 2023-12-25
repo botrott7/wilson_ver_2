@@ -41,20 +41,3 @@ async def message_AI(text: str):
     except Exception as e:
         logger.error(f'Ошибка при обработке запроса: {e}')
         return REPLIC_ERROR
-
-
-async def message_URL(text: str):
-    try:
-        logger.debug(f'Получен URL {text}')
-        result = AGENT.run(f'Give me the summary of {text}')
-        logger.debug(f'Получен ОТВЕТ {result[:100]}')
-        return result
-    except Exception as e:
-        logger.error(f'Ошибка при обработке запроса: {e}')
-        return REPLIC_ERROR
-
-# async def main():
-#     result = await message_URL('http://hf.co')
-#     print(result)
-
-# asyncio.run(message_URL('http://hf.co'))
