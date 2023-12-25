@@ -7,7 +7,6 @@ from logibot.loggerbot import logger
 async def on_startup(_):
     logger.info('Start BOT')
     print('Start')
-    # sql_start()p
 
 
 client.register_handlers_client(dp)
