@@ -10,12 +10,14 @@ import aiohttp
 from io import BytesIO
 from PIL import Image
 from validators import url as validate_url
+from translate import Translator
 
 class Form_bot(StatesGroup):
     BOT_COMMAND = State()
     WAITING_FOR_WORD = State()
     IMAGE_FOR_DESC = State()
 
+TRANSLATOR = Translator(from_lang="en", to_lang="ru")
 
 REPLIC_EXCEPT_CLIENT = 'Пожалуйста, повторите попытку позже или обратитесь за помощью к администратору.'
 
@@ -88,7 +90,8 @@ async def generate_caption(message: types.Message, raw_image: Image.Image):
         inputs = PROCESSOR(raw_image, text, return_tensors="pt")
         out = MODEL.generate(**inputs)
         caption = PROCESSOR.decode(out[0], skip_special_tokens=True)
-        await message.answer(caption)
+        translation = TRANSLATOR.translate(caption)
+        await message.answer(translation)
     except Exception as e:
         logger.exception(f"Ошибка при генерации подписи: {e}")
         await message.answer("Произошла ошибка при обработке изображения.")
