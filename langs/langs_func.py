@@ -1,6 +1,8 @@
-from config.config import API_YAN_LANDS
 import aiohttp
+
+from config.config import API_YAN_LANDS
 from logibot.loggerbot import logger
+
 
 async def translate_word(lang, text):
     if lang == 'ru-ru-syn':

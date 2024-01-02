@@ -1,4 +1,6 @@
 import os
+import re
+
 from llama_cpp import Llama
 from transformers import HfAgent
 from logibot.loggerbot import logger
@@ -7,7 +9,6 @@ CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(CURRENT_DIRECTORY, "model-q8_0.gguf")
 LLM = Llama(model_path=MODEL_PATH, n_ctx=1024)
 AGENT = HfAgent("https://api-inference.huggingface.co/models/bigcode/starcoder")
-
 
 REPLIC_ERROR = 'Ошибка при обработке запроса'
 
@@ -35,7 +36,8 @@ async def message_AI(text: str):
         logger.debug(f'Получен ВОПРОС: {text}')
         output = LLM(text, max_tokens=2024,
                      echo=False)
-        result = output["choices"][0]["text"].strip()
+        text = output["choices"][0]["text"].strip()
+        result = re.search(r'(?<=bot\s)(.*)', text).group(1)
         logger.debug(f'Получен ОТВЕТ: {result[:100]}')
         return result
     except Exception as e:

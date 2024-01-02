@@ -12,14 +12,17 @@ from PIL import Image
 from validators import url as validate_url
 from translate import Translator
 
+
 class Form_bot(StatesGroup):
     BOT_COMMAND = State()
     WAITING_FOR_WORD = State()
     IMAGE_FOR_DESC = State()
 
+
 TRANSLATOR = Translator(from_lang="en", to_lang="ru")
 
 REPLIC_EXCEPT_CLIENT = 'Пожалуйста, повторите попытку позже или обратитесь за помощью к администратору.'
+
 
 async def command_start(message: types.Message):
     '''Команда для запуска бота'''
@@ -32,19 +35,27 @@ async def command_start(message: types.Message):
 
 
 async def command_help(message: types.Message):
-    '''Команда, которая вызывает список доступных команд'''
+    '''Команда, которая вызывает список всех доступных команд'''
     try:
-        await message.answer('THIS IS TEST COMMAND HELP')
+        help_text = '''
+        Список команд:
+        /start - Команда для запуска бота
+        /image - Команда, которая дает описание изображению
+        /bot - Команда для генерации ответа от модели, просит пользователя ввести вопрос
+        /langs - Команда, позволяет провести определенные действия со словом
+        '''
+        await message.answer(help_text)
         await message.delete()
     except Exception as e:
         logger.exception(f'Произошла ошибка: {str(e)}')
-        await message.answer(REPLIC_EXCEPT_CLIENT)
+        await message.answer('Произошла ошибка при выполнении команды help')
 
 
 async def command_image(message: types.Message, state: FSMContext):
     '''Команда, которая дает опиание изображению'''
     try:
-        await message.answer('Пожалуйста, введите URL изображения или прикрепите изображение(поставьте галочку' + ' ☑ ' + 'Сжать изображение): ')
+        await message.answer(
+            'Пожалуйста, введите URL изображения или прикрепите изображение(поставьте галочку' + ' ☑ ' + 'Сжать изображение): ')
         await Form_bot.IMAGE_FOR_DESC.set()
     except Exception as e:
         logger.exception(f'Произошла ошибка: {str(e)}')

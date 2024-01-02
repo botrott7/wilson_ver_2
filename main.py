@@ -4,6 +4,7 @@ from handlers import client, admin
 from logibot.loggerbot import logger
 from keyboards_inline.menu import set_main_menu
 
+
 async def on_startup(_):
     logger.info('Start BOT')
     await set_main_menu(bot)

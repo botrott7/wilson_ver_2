@@ -1,4 +1,5 @@
 import aiohttp
+
 from config.config import ADMIN_IDS, CATEGORY_VALUES
 from aiogram.dispatcher import FSMContext
 from aiogram import types, Dispatcher
@@ -69,7 +70,7 @@ async def get_measurements():
     '''Get all measurements'''
     try:
         async with aiohttp.ClientSession() as session:
-            response = await session.get('http://127.0.0.1:8000/api/measurements/') # Указать ваш API
+            response = await session.get('http://127.0.0.1:8000/api/measurements/')  # Указать ваш API
             logger.info('GET', response.status)
             if response.status == 200:
                 measurements = await response.json()
@@ -120,7 +121,8 @@ async def process_activity(message: types.Message, state: FSMContext):
                 "value": value,
                 "activity": activity,
             }
-            async with session.post('http://127.0.0.1:8000/api/measurements/', json=payload) as response: # Указать ваш API
+            async with session.post('http://127.0.0.1:8000/api/measurements/',
+                                    json=payload) as response:  # Указать ваш API
                 logger.info('POST', response.status)
                 if response.status == 200:
                     await message.answer(f"Successfully sent data: {category} - {value} - {activity}")
